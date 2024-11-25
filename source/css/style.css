@@ -15,26 +15,165 @@
     font-size: 0.95rem;
 }
 
-h4 {
-    font-size: 1.1rem
-}
-
-.container {
-    width: 100%;
-    height: 100vh;
+body {
     background-image: url('../img/image-staduim.jpg');
+    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.col {
-    width: 85%;
-    margin: auto;
+h4 {
+    font-size: 1.1rem
+}
+
+.container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     padding-top: 60px;
+}
+
+.stadium-image {
+    position: relative;
+    margin-right: 30px;
+}
+
+.shadow-card:hover {
+    filter: drop-shadow(1px 1px 20px rgb(53, 190, 190));
+    cursor: pointer;
+}
+
+.stadium-image .st {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    top: -6%;
+    left: 40%;
+}
+
+.stadium-image .lw {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    top: -1%;
+    left: 9%;
+}
+
+.stadium-image .rw {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    top: -1%;
+    right: 8%;
+}
+
+.stadium-image .r-cm {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    top: 28%;
+    left: 13%;
+}
+
+.stadium-image .c-cm {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    top: 32%;
+    left: 40%;
+}
+
+.stadium-image .l-cm {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    top: 28%;
+    right: 13%;
+}
+
+.stadium-image .rb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    bottom: 13%;
+    left: 0%;
+}
+
+.stadium-image .lb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    bottom: 13%;
+    right: 0%;
+}
+
+.stadium-image .r-cb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    bottom: 10%;
+    left: 20%;
+}
+
+.stadium-image .l-cb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    bottom: 10%;
+    right: 20%;
+}
+
+.stadium-image .gk {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+    position: absolute;
+    bottom: 0%;
+    left: 40%;
 }
 
 .info-squad {
@@ -164,6 +303,111 @@ h4 {
 
 .price h4 {
     margin-right: 15px;
+}
+
+.substitutes {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.substitutes .st {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .lw {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .rw {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px; 
+}
+
+.substitutes .r-cm {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .c-cm {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px; 
+}
+
+.substitutes .l-cm {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .rb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .lb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .r-cb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .l-cb {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
+}
+
+.substitutes .gk {
+    background-image: url('../img/cards/badge_total_rush.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 230px;
+    width: 160px;
 }
 
 /* @media screen and (max-width: 700px) {
