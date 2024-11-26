@@ -292,6 +292,8 @@ h4 {
 
 .body-card h3 {
     text-align: center;
+    width: 90%;
+    font-size: 0.8rem
 }
 
 .body-card .rate-player {
