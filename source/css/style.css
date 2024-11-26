@@ -39,11 +39,20 @@ h4 {
     margin-right: 30px;
 }
 
+/* effect shadow of cards */
+.shadow-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
 .shadow-card:hover {
     filter: drop-shadow(1px 1px 20px rgb(53, 190, 190));
     cursor: pointer;
 }
 
+/* position players */
 .stadium-image .st {
     background-image: url('../img/cards/badge_total_rush.webp');
     background-position: center;
@@ -176,6 +185,7 @@ h4 {
     left: 40%;
 }
 
+/* card information squad */
 .info-squad {
     background-color: var(--primary-color);
     color: var(--color-white);
@@ -408,6 +418,54 @@ h4 {
     background-size: contain;
     height: 230px;
     width: 160px;
+}
+
+/* information card player */
+
+.card-player .head-card {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.head-card .position {
+    position: absolute;
+    left: -3px;
+    top: 13px;
+    text-align: center;
+}
+
+.position p {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: -8px;
+}
+
+.body-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.body-card h3 {
+    text-align: center;
+}
+
+.body-card .rate-player {
+    display: flex;
+    color: white;
+    gap: 6px;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.rate-player p {
+    margin: -7px;
+    font-size: 0.5rem;
+}
+
+.rate-player span {
+    font-size: 0.7rem;
 }
 
 /* @media screen and (max-width: 700px) {
