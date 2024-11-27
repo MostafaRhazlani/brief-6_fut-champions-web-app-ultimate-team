@@ -62,7 +62,7 @@ fetch('/source/players.json')
                         <span>${player.position}</span>
                     </div>
                     <div class="image-player">
-                        <img width="100" src="${player.photo}" alt="">
+                        <img width="150" src="${player.photo}" alt="">
                     </div>
                 </div>
                 <div class="body-card">
@@ -92,6 +92,10 @@ fetch('/source/players.json')
                             <p>PHY</p>
                             <span>${player.physical || player.positioning}</span>
                         </div>
+                    </div>
+                    <div class="current-team">
+                        <img width="17" height="10" src="${player.flag}" alt="">
+                        <img width="14" src="${player.logo}" alt="">
                     </div>
                 </div>
             </div>`
@@ -136,7 +140,7 @@ fetch('/source/players.json')
                             <span>${player.position}</span>
                         </div>
                         <div class="image-player">
-                            <img width="100" src="${player.photo}" alt="">
+                            <img width="150" src="${player.photo}" alt="">
                         </div>
                     </div>
                     <div class="body-card">
@@ -166,8 +170,13 @@ fetch('/source/players.json')
                                 <p>PHY</p>
                                 <span>${player.physical || player.positioning}</span>
                             </div>
-                        </div>
+                            </div>
+                            <div class="current-team">
+                                <img width="17" height="10" src="${player.flag}" alt="">
+                                <img width="14" src="${player.logo}" alt="">
+                            </div>
                     </div>
+                    
                 </div>`
             stadiumImage.innerHTML += principalPlayer;
         })
