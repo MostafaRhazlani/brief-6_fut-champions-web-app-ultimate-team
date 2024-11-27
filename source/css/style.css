@@ -62,67 +62,76 @@ h4 {
 }
 
 /* position players */
-.stadium-image .st {
+
+.principal-card {
+    position: absolute;
+    top: -4%;
+    right: -13%;
+    height: 140px;
+    width: 160px;
+}
+
+.stadium-image .ST {
     position: absolute;
     top: -6%;
     left: 40%;
 }
 
-.stadium-image .lw {
+.stadium-image .LW {
     position: absolute;
     top: -1%;
     left: 9%;
 }
 
-.stadium-image .rw {
+.stadium-image .RW {
     position: absolute;
     top: -1%;
     right: 8%;
 }
 
-.stadium-image .r-cm {
+.stadium-image .r-CM {
     position: absolute;
     top: 28%;
     left: 13%;
 }
 
-.stadium-image .c-cm {
+.stadium-image .CM {
     position: absolute;
     top: 32%;
     left: 40%;
 }
 
-.stadium-image .l-cm {
+.stadium-image .l-CM {
     position: absolute;
     top: 28%;
     right: 13%;
 }
 
-.stadium-image .rb {
+.stadium-image .LB {
     position: absolute;
     bottom: 13%;
     left: 0%;
 }
 
-.stadium-image .lb {
+.stadium-image .RB {
     position: absolute;
     bottom: 13%;
     right: 0%;
 }
 
-.stadium-image .r-cb {
+.stadium-image .l-CB {
     position: absolute;
     bottom: 10%;
     left: 20%;
 }
 
-.stadium-image .l-cb {
+.stadium-image .CB {
     position: absolute;
     bottom: 10%;
     right: 20%;
 }
 
-.stadium-image .gk {
+.stadium-image .GK {
     position: absolute;
     bottom: 0%;
     left: 40%;
