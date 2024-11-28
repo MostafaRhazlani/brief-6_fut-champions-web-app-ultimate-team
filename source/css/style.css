@@ -332,7 +332,7 @@ h4 {
     display: none;
     position: fixed;
     top: 6%;
-    z-index: 2;
+    z-index: 999;
     width: 80%;
     height: 90%;
     border-radius: 10px;
