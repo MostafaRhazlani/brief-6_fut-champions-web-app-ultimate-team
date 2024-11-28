@@ -3,11 +3,13 @@ let players;
 let cardAllPlayer;
 let principalPlayer;
 let substitutePlayer;
+let playerSubstitutes;
 
 const stadiumImage = document.querySelector('.stadium-image');
 const substitutes = document.querySelector('.substitutes');
 const modalPlayers = document.querySelector('.modal-players');
 const modalSubstitutes = document.querySelector('.modal-substitutes');
+const contentModalSubstitutes = document.querySelector('.content-modal');
 
 const close = document.querySelector('.close');
 const closeSubstitutes = document.querySelector('.close-substitutes');
@@ -99,6 +101,7 @@ fetch('/source/players.json')
     
     showPrincipalPlayers()
     showSubstitutesPlayers()
+    showModalSubstitutesPlayer();
     showAllPlayers()
 
     // function for show all players
@@ -277,6 +280,62 @@ fetch('/source/players.json')
             })
         })
 
+    }
+
+    function showModalSubstitutesPlayer() {
+        JSON.parse(localStorage.getItem('substitutes')) || [];
+        
+        localSubstitutes.map(player => {
+            playerSubstitutes =
+                `<div class="card-player" data-id="${player.id}">
+                    <div class="head-card">
+                        <div class="position">
+                            <p>${player.rating}</p>
+                            <span>${player.position}</span>
+                        </div>
+                        <div class="image-player">
+                            <img width="150" src="${player.photo}" alt="">
+                        </div>
+                    </div>
+                    <div class="body-card">
+                        <h3>${player.name}</h3>
+                        <div class="rate-player">
+                            <div>
+                                <p>PAC</p>
+                                <span>${player.pace || player.diving}</span>
+                            </div>
+                            <div>
+                                <p>SHO</p>
+                                <span>${player.shooting || player.handling}</span>
+                            </div>
+                            <div>
+                                <p>PAS</p>
+                                <span>${player.passing || player.kicking}</span>
+                            </div>
+                            <div>
+                                <p>DRI</p>
+                                <span>${player.dribbling || player.reflexes}</span>
+                            </div>
+                            <div>
+                                <p>DEF</p>
+                                <span>${player.defending || player.speed}</span>
+                            </div>
+                            <div>
+                                <p>PHY</p>
+                                <span>${player.physical || player.positioning}</span>
+                            </div>
+                        </div>
+                        <div class="current-team">
+                            <img width="17" height="10" src="${player.flag}" alt="">
+                            <img width="14" src="${player.logo}" alt="">
+                        </div>
+                    </div>
+                    
+                </div>`
+            contentModalSubstitutes.innerHTML += playerSubstitutes;
+            
+            
+        })
     }
 
     function showSubstitutesPlayers() {
