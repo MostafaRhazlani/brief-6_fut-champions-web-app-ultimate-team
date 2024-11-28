@@ -7,7 +7,10 @@ let substitutePlayer;
 const stadiumImage = document.querySelector('.stadium-image');
 const substitutes = document.querySelector('.substitutes');
 const modalPlayers = document.querySelector('.modal-players');
+const modalSubstitutes = document.querySelector('.modal-substitutes');
+
 const close = document.querySelector('.close');
+const closeSubstitutes = document.querySelector('.close-substitutes');
 
 const allPlayers = document.querySelector('.allPlayers');
 
@@ -56,6 +59,12 @@ const showModalPlayers = () => {
         })
     })
 }
+
+
+closeSubstitutes.addEventListener('click', () => {
+    
+    modalSubstitutes.classList.remove('show-substitutes')
+})
 
 close.addEventListener('click', () => {
     modalPlayers.classList.remove('hidden')
@@ -212,7 +221,7 @@ fetch('/source/players.json')
         
         localPlayers.map(player => {
             principalPlayer =
-                `<div class="card-player ${findPositionPlayer(player.position, player.id)}" data-id="${player.id}">
+                `<div class="card-player change-place ${findPositionPlayer(player.position, player.id)}" data-id="${player.id}">
                     <div class="head-card">
                         <div class="position">
                             <p>${player.rating}</p>
@@ -259,7 +268,15 @@ fetch('/source/players.json')
                 </div>`
             stadiumImage.innerHTML += principalPlayer;
         })
+        
         showModalPlayers();
+
+        document.querySelectorAll('.change-place').forEach(change => {
+            change.addEventListener('click', () => {
+                modalSubstitutes.classList.add('show-substitutes')
+            })
+        })
+
     }
 
     function showSubstitutesPlayers() {
