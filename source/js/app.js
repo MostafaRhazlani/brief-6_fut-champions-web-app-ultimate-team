@@ -11,6 +11,34 @@ const close = document.querySelector('.close');
 
 const allPlayers = document.querySelector('.allPlayers');
 
+const btn = document.querySelector('.btn');
+const closeForm = document.querySelector('.close-form');
+const submit = document.querySelector('.submit');
+const addNewPlayer = document.querySelector('.add-new-player');
+
+btn.addEventListener('click', () => {
+    addNewPlayer.classList.add('show');
+})
+
+closeForm.addEventListener('click', (e) => {
+    e.preventDefault();
+    addNewPlayer.classList.remove('show');
+})
+
+const name = document.querySelector('.name');
+const nationality = document.querySelector('.nationality');
+const club = document.querySelector('.club');
+const ratingPlayer = document.querySelector('.ratingPlayer');
+const selectPositionPlayer = document.querySelector('.select-position-player');
+
+const resetData = () => {
+    name.value = '',
+    nationality.value = '',
+    club.value = '',
+    ratingPlayer.value = 0
+    selectPositionPlayer.value = ''
+}
+
 // event click to show all players
 const showModalPlayers = () => {
     const appPlayer = document.querySelectorAll('.add-player');
@@ -18,14 +46,12 @@ const showModalPlayers = () => {
         card.addEventListener('click', () => {
             
             if(card.dataset.card == 1) {
-                console.log(card.dataset.card);
                 
                 allPlayers.dataset.id = card.dataset.card
-                modalPlayers.classList.toggle('hidden')
+                modalPlayers.classList.add('hidden')
             } else {
-                console.log(card.dataset.card);
                 allPlayers.dataset.id = card.dataset.card
-                modalPlayers.classList.toggle('hidden')  
+                modalPlayers.classList.add('hidden')  
             }
         })
     })
@@ -41,9 +67,11 @@ fetch('/source/players.json')
 .then(res => {
     players = res.players
 
+    // localStorage.setItem('allPlayers', JSON.stringify(players))
     let localPlayers = JSON.parse(localStorage.getItem('playersSelected')) || [];
     let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
-
+    let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+    
     const findPositionPlayer = (positionPlayer, playerId) => {
 
         const findPosition = localPlayers.filter(player => player.position === positionPlayer);
@@ -66,7 +94,8 @@ fetch('/source/players.json')
 
     // function for show all players
     function showAllPlayers() {
-        players.map(player => {
+        JSON.parse(localStorage.getItem('allPlayers')) || []
+        localAllPlayers.map(player => {
             cardAllPlayer = 
             `<div class="card-player selected-player select-substitute-player" data-id="${player.id}">
                 <div class="head-card">
@@ -121,7 +150,7 @@ fetch('/source/players.json')
             const cardId = player.dataset.id
 
             player.addEventListener('click', () => {
-                const playerId = players.find(p => p.id == cardId)
+                const playerId = localAllPlayers.find(p => p.id == cardId)
 
                 const findInLocal = localPlayers.find(p => p.id == cardId)
 
@@ -145,6 +174,37 @@ fetch('/source/players.json')
             })
         })
     }
+
+    JSON.parse(localStorage.getItem('allPlayers')) || []
+    let index = localAllPlayers.length+1;
+    submit.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        const objectPlayer = {
+            "id": index++,
+            "name": name.value,
+            "photo": 'https://cdn3.futbin.com/content/fifa25/img/players/p50531752.png?fm=png&ixlib=java-2.1.0&w=485&s=c618880412227731b9665c31e4531593',
+            "position": selectPositionPlayer.value,
+            "nationality": nationality.value,
+            "flag": '',
+            "club": club,
+            "logo": '',
+            "rating": ratingPlayer.value,
+            "pace": '88',
+            "shooting": '88',
+            "passing": '88',
+            "dribbling": '88',
+            "defending": '88',
+            "physical": '88'
+        }
+        
+        localAllPlayers.push(objectPlayer);
+        localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
+        showAllPlayers()
+        addNewPlayer.classList.remove('show');
+
+        resetData();
+    })
 
     // show principal players
     function showPrincipalPlayers() {
