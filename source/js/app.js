@@ -188,6 +188,8 @@ fetch('/source/players.json')
                     
                 }
                 calcRating();
+                totalChemistry()
+                calcPriceTeam()
                 modalPlayers.classList.remove('hidden')
             })
         })
@@ -302,9 +304,46 @@ fetch('/source/players.json')
             </div>
             <span>PHY</span>
         </div>`
-        showPrincipalPlayers();
     }
     calcRating()
+
+    function totalChemistry() {
+        let count = 0
+        const rangeRate = document.querySelector('.range-rate');
+
+        localPrincipalPlayers.map(player => {
+            count += player.rating
+        })
+
+        let total = count / localPrincipalPlayers.length
+
+        rangeRate.innerHTML = `
+                <div class="range">
+                    <div class="line-range"></div>
+                </div>
+            <p>${Math.floor(total) || 0}/100</p>`
+
+        document.querySelector('.line-range').style.width = `${Math.floor(total)}%`
+    }
+    totalChemistry()
+
+    function calcPriceTeam() {
+        let countPrice = 0
+        const price = document.querySelector('.price');
+
+        localPrincipalPlayers.map(player => {
+            countPrice += player.rating
+        })
+
+        price.innerHTML = '';
+
+        price.innerHTML = `
+            <h4>Price:</h4>
+            <p>${countPrice},000,000,000</p>
+            <img width="13" src="./source/img/coin-fut.svg" alt="">`
+    }
+
+    calcPriceTeam()
 
     // show principal players
     function showPrincipalPlayers() {
@@ -469,6 +508,10 @@ fetch('/source/players.json')
 
                 showPrincipalPlayers();
                 showSubstitutesPlayers();
+
+                calcRating();
+                totalChemistry()
+                calcPriceTeam()
                 modalSubstitutes.classList.remove('show-substitutes');
             })
         })

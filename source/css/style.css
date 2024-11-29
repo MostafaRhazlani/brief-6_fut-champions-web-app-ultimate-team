@@ -271,7 +271,7 @@ h4 {
 }
 
 .range .line-range {
-    width: 92%;
+    width: 0%;
     height: 10px;
     background: linear-gradient(to right, rgb(207, 36, 36), rgb(218, 161, 56), green);
     border-radius: var(--raduis);
@@ -281,6 +281,10 @@ h4 {
     display: flex;
     align-items: baseline;
     margin-bottom: 15px;
+}
+
+.price img {
+    margin-left: 4px;
 }
 
 .price h4 {
