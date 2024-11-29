@@ -101,7 +101,6 @@ fetch('/source/players.json')
     
     showPrincipalPlayers()
     showSubstitutesPlayers()
-    // showModalSubstitutesPlayer();
     showAllPlayers()
 
     // function for show all players
@@ -349,7 +348,7 @@ fetch('/source/players.json')
         })
         
         document.querySelectorAll('.change-place').forEach(change => {
-            change.addEventListener('click', (e) => {
+            change.addEventListener('click', () => {
 
                 
                 // find players
