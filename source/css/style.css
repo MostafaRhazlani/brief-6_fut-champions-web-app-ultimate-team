@@ -269,9 +269,13 @@ h4 {
 }
 
 .substitutes {
+    display: flex;
     padding: 30px;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
+}
+
+.content-substitutes {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* information card player */
