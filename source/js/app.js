@@ -519,7 +519,12 @@ fetch('/source/players.json')
 
     function showSubstitutesPlayers() {
         const contentSubstitutes = document.querySelector('.content-substitutes');
+        const substitutesCard = document.querySelector('.substitutes-card');
         contentSubstitutes.innerHTML = ''
+
+        if(localSubstitutes.length == 12) {
+            substitutesCard.style.display = 'none'
+        }
 
         localSubstitutes.map(player => {
             substitutePlayer =
