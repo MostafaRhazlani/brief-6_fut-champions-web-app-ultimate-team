@@ -226,6 +226,25 @@ h4 {
     height: 40px;
     border: solid 1.5px gray;
     border-radius: var(--raduis);
+    margin-bottom: 3px;
+}
+
+.rate.red {
+    border: solid 1.5px rgb(252, 36, 36);
+    color: rgb(252, 36, 36);
+    box-shadow: 0px 0px 4px rgb(252, 36, 36);
+}
+
+.rate.yellow {
+    border: solid 1.5px gold;
+    color: gold;
+    box-shadow: 0px 0px 4px gold;
+}
+
+.rate.green {
+    border: solid 1.5px greenyellow;
+    color: greenyellow;
+    box-shadow: 0px 0px 4px greenyellow;
 }
 
 .total-chemistry {

@@ -187,6 +187,7 @@ fetch('/source/players.json')
                     }
                     
                 }
+                calcRating();
                 modalPlayers.classList.remove('hidden')
             })
         })
@@ -222,6 +223,88 @@ fetch('/source/players.json')
 
         resetData();
     })
+
+    // function for calc rating and show result calc
+    function calcRating() {
+        let countPAC = 0
+        let countSHO = 0
+        let countPAS = 0
+        let countDRI = 0
+        let countDEF = 0
+        let countPHY = 0
+
+        const rating = document.querySelector('.rating');
+
+        rating.innerHTML = ''
+
+        localPrincipalPlayers.map(player => {
+            if(player.position != 'GK') {
+                countPAC += player.pace 
+                countSHO += player.shooting 
+                countPAS += player.passing 
+                countDRI += player.dribbling 
+                countDEF += player.defending 
+                countPHY += player.physical 
+            } 
+        }) 
+
+        let cPac = countPAC / localPrincipalPlayers.length
+        let cSho = countSHO / localPrincipalPlayers.length
+        let cPas = countPAS / localPrincipalPlayers.length
+        let cDri = countDRI / localPrincipalPlayers.length
+        let cDef = countDEF / localPrincipalPlayers.length
+        let cPhy = countPHY / localPrincipalPlayers.length
+        
+        
+        // condition for change color border of rating
+        let changeColorBorderPAC = cPac <= 30 ? 'red' : cPac > 30 && cPac <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderSHo = cSho <= 30 ? 'red' : cSho > 30 && cSho <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPAS = cPas <= 30 ? 'red' : cPas > 30 && cPas <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderDRI = cDri <= 30 ? 'red' : cDri > 30 && cDri <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderDEF = cDef <= 30 ? 'red' : cDef > 30 && cDef <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPHY = cPhy <= 30 ? 'red' : cPhy > 30 && cPhy <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        
+
+        rating.innerHTML = `
+        <div class="card-rate">
+            <div class="rate ${changeColorBorderPAC}">
+                <p>${Math.floor(cPac) || '-'}</p>
+            </div>
+            <span>PAC</span>
+        </div>
+        <div class="card-rate">
+            <div class="rate ${changeColorBorderSHo}">
+                <p>${Math.floor(cSho) || '-'}</p>
+            </div>
+            <span>SHO</span>
+        </div>
+        <div class="card-rate">
+            <div class="rate ${changeColorBorderPAS}">
+                <p>${Math.floor(cPas) || '-'}</p>
+            </div>
+            <span>PAS</span>
+        </div>
+        <div class="card-rate">
+            <div class="rate ${changeColorBorderDRI}">
+                <p>${Math.floor(cDri) || '-'}</p>
+            </div>
+            <span>DRI</span>
+        </div>
+        <div class="card-rate">
+            <div class="rate ${changeColorBorderDEF}">
+                <p>${Math.floor(cDef) || '-'}</p>
+            </div>
+            <span>DEF</span>
+        </div>
+        <div class="card-rate">
+            <div class="rate ${changeColorBorderPHY}">
+                <p>${Math.floor(cPhy) || '-'}</p>
+            </div>
+            <span>PHY</span>
+        </div>`
+        showPrincipalPlayers();
+    }
+    calcRating()
 
     // show principal players
     function showPrincipalPlayers() {
@@ -343,8 +426,6 @@ fetch('/source/players.json')
                     </div>
                     
                 </div>`
-            // contentModalSubstitutes.innerHTML += playerSubstitutes;
-            
         })
         
         document.querySelectorAll('.change-place').forEach(change => {
