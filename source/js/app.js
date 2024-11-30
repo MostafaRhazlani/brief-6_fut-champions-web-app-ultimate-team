@@ -100,17 +100,33 @@ fetch('/source/players.json')
 
     // remove all players from principal and substitutes
     const btnRemovePlayers = document.querySelector('.remove-players');
+    
     const removePlayers = () => {
         localPrincipalPlayers = []
         localSubstitutes = []
 
         localStorage.setItem('principalPlayers', JSON.stringify(localPrincipalPlayers))
         localStorage.setItem('substitutes', JSON.stringify(localSubstitutes))
+
+        toggleBtnRemove()
         showPrincipalPlayers()
         showSubstitutesPlayers()
+
+        calcRating();
+        totalChemistry()
+        calcPriceTeam()
     }
     btnRemovePlayers.addEventListener('click', removePlayers)
     
+    function toggleBtnRemove() {
+        if(localPrincipalPlayers.length == 0 && localSubstitutes.length == 0) {
+            btnRemovePlayers.style.display = 'none'
+        } else {
+            btnRemovePlayers.style.display = 'flex'
+        }
+    }
+    
+    toggleBtnRemove()
     showPrincipalPlayers()
     showSubstitutesPlayers()
     showAllPlayers()
@@ -202,6 +218,8 @@ fetch('/source/players.json')
                 calcRating();
                 totalChemistry()
                 calcPriceTeam()
+                toggleBtnRemove()
+                
                 modalPlayers.classList.remove('hidden')
             })
         })
