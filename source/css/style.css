@@ -169,6 +169,24 @@ h4 {
 }
 
 /* card information squad */
+
+.remove-players button {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    margin-bottom: 10px;
+    transition: ease-in 0.2s;
+}
+
+.remove-players button:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    transition: ease-in 0.2s;
+}
+
 .info-squad {
     background-color: var(--primary-color);
     color: var(--color-white);

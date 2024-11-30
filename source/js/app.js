@@ -36,6 +36,10 @@ const club = document.querySelector('.club');
 const ratingPlayer = document.querySelector('.ratingPlayer');
 const selectPositionPlayer = document.querySelector('.select-position-player');
 
+let localPrincipalPlayers = JSON.parse(localStorage.getItem('principalPlayers')) || [];
+let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
+let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+
 const resetData = () => {
     name.value = '',
     nationality.value = '',
@@ -62,9 +66,7 @@ const showModalPlayers = () => {
     })
 }
 
-
-closeSubstitutes.addEventListener('click', () => {
-    
+closeSubstitutes.addEventListener('click', () => { 
     modalSubstitutes.classList.remove('show-substitutes')
 })
 
@@ -79,9 +81,6 @@ fetch('/source/players.json')
     players = res.players
 
     // localStorage.setItem('allPlayers', JSON.stringify(players))
-    let localPrincipalPlayers = JSON.parse(localStorage.getItem('principalPlayers')) || [];
-    let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
-    let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
     
     const findPositionPlayer = (positionPlayer, playerId) => {
 
@@ -98,6 +97,19 @@ fetch('/source/players.json')
             return `r-${positionPlayer}`;
         }
     };
+
+    // remove all players from principal and substitutes
+    const btnRemovePlayers = document.querySelector('.remove-players');
+    const removePlayers = () => {
+        localPrincipalPlayers = []
+        localSubstitutes = []
+
+        localStorage.setItem('principalPlayers', JSON.stringify(localPrincipalPlayers))
+        localStorage.setItem('substitutes', JSON.stringify(localSubstitutes))
+        showPrincipalPlayers()
+        showSubstitutesPlayers()
+    }
+    btnRemovePlayers.addEventListener('click', removePlayers)
     
     showPrincipalPlayers()
     showSubstitutesPlayers()
@@ -522,8 +534,10 @@ fetch('/source/players.json')
         const substitutesCard = document.querySelector('.substitutes-card');
         contentSubstitutes.innerHTML = ''
 
-        if(localSubstitutes.length == 12) {
+        if(localSubstitutes.length == 4) {
             substitutesCard.style.display = 'none'
+        } else {
+            substitutesCard.style.display = 'flex'
         }
 
         localSubstitutes.map(player => {
