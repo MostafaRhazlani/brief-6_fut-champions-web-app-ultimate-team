@@ -256,6 +256,7 @@ fetch('/source/players.json')
         // display all position
         const modalPosition = document.querySelector('.modal-position');
         const modalCountry = document.querySelector('.modal-country');
+        const modalClub = document.querySelector('.modal-club');
 
         const positions = ['GK', 'CB', 'LB', 'RB', 'CM', 'LW', 'RW', 'ST']
         modalPosition.innerHTML = ''
@@ -324,7 +325,48 @@ fetch('/source/players.json')
             })
         })
 
+        const filtredClub = []
+        const filterLogoClub = []
+        // filter club if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filtredClub.includes(localAllPlayers[i].club)) {
+                filtredClub.push(localAllPlayers[i].club)
+            }
+        }
 
+        // filter logo club if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filterLogoClub.includes(localAllPlayers[i].logo)) {
+                filterLogoClub.push(localAllPlayers[i].logo)
+            }
+        }
+
+        // display all clubs
+        modalClub.innerHTML = ''
+        filtredClub.forEach((club, i) => {
+
+            modalClub.innerHTML += `
+                <div class="group-filter filter-club">
+                    <img width="13" src="${filterLogoClub[i]}" alt="">
+                    <span>${club}</span>
+                </div>
+            `
+        })
+
+        // filter players by club
+        document.querySelectorAll('.filter-club').forEach(club => {
+            club.addEventListener('click', () => {
+                
+                let child = club.querySelector('span');
+                
+                const filtredClub = allPlayers.filter(p => p.club == child.innerText)
+                
+                localAllPlayers = filtredClub
+                btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                showAllPlayers()
+            })
+        })
     }
     filterPlayers()
 
