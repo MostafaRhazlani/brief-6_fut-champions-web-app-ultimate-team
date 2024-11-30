@@ -62,6 +62,36 @@ h4 {
     cursor: pointer;
 }
 
+.card-add-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-image: url('https://www.futbin.com/design2/img/static/evolutions/placeholder-card-normal.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 190px;
+    width: 159px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.card-add-player:hover {
+    filter: drop-shadow(1px 1px 8px var(--aqua-color));
+    cursor: pointer;
+}
+
+.card-add-player img {
+    position: absolute;
+    z-index: 1;
+}
+
+.card-add-player span {
+    font-size: 25px;
+    color: var(--aqua-color);
+}
+
 /* position players */
 
 .principal-card {
@@ -139,6 +169,24 @@ h4 {
 }
 
 /* card information squad */
+
+.remove-players button {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--color-white);
+    margin-bottom: 10px;
+    transition: ease-in 0.2s;
+}
+
+.remove-players button:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    transition: ease-in 0.2s;
+}
+
 .info-squad {
     background-color: var(--primary-color);
     color: var(--color-white);
@@ -226,6 +274,25 @@ h4 {
     height: 40px;
     border: solid 1.5px gray;
     border-radius: var(--raduis);
+    margin-bottom: 3px;
+}
+
+.rate.red {
+    border: solid 1.5px rgb(252, 36, 36);
+    color: rgb(252, 36, 36);
+    box-shadow: 0px 0px 4px rgb(252, 36, 36);
+}
+
+.rate.yellow {
+    border: solid 1.5px gold;
+    color: gold;
+    box-shadow: 0px 0px 4px gold;
+}
+
+.rate.green {
+    border: solid 1.5px greenyellow;
+    color: greenyellow;
+    box-shadow: 0px 0px 4px greenyellow;
 }
 
 .total-chemistry {
@@ -252,7 +319,7 @@ h4 {
 }
 
 .range .line-range {
-    width: 92%;
+    width: 0%;
     height: 10px;
     background: linear-gradient(to right, rgb(207, 36, 36), rgb(218, 161, 56), green);
     border-radius: var(--raduis);
@@ -264,12 +331,18 @@ h4 {
     margin-bottom: 15px;
 }
 
+.price img {
+    margin-left: 4px;
+}
+
 .price h4 {
     margin-right: 15px;
 }
 
 .substitutes {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     padding: 30px;
 }
 
