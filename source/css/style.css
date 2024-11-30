@@ -581,6 +581,8 @@ select:focus {
     border-radius: 5px;
     color: white;
     margin-right: 7px;
+    display: flex;
+    align-items: center;
 }
 
 button.focus-btn {
