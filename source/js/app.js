@@ -255,6 +255,7 @@ fetch('/source/players.json')
 
         // display all position
         const modalPosition = document.querySelector('.modal-position');
+        const modalCountry = document.querySelector('.modal-country');
 
         const positions = ['GK', 'CB', 'LB', 'RB', 'CM', 'LW', 'RW', 'ST']
         modalPosition.innerHTML = ''
@@ -265,11 +266,13 @@ fetch('/source/players.json')
             `
         })
 
+        
+        const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+
         // filter players when click on button position 
         document.querySelectorAll('.filter-position').forEach(position => {
             
             position.addEventListener('click', () => {
-                const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
                 const filtredPosition = allPlayers.filter(p => p.position == position.innerText)
                 
                 localAllPlayers = filtredPosition
@@ -278,6 +281,50 @@ fetch('/source/players.json')
                 showAllPlayers()
             })
         })
+
+        const filtredCountry = []
+        const filtredFlag = []
+        // filter countries if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filtredCountry.includes(localAllPlayers[i].nationality)) {
+                filtredCountry.push(localAllPlayers[i].nationality)
+            }
+        }
+        // filter flags if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filtredFlag.includes(localAllPlayers[i].flag)) {
+                filtredFlag.push(localAllPlayers[i].flag)
+            }
+        }
+        
+        // display all countries
+        modalCountry.innerHTML = ''
+        filtredCountry.forEach((country, i) => {
+
+            modalCountry.innerHTML += `
+                <div class="group-filter filter-country">
+                    <img width="13" src="${filtredFlag[i]}" alt="">
+                    <span>${country}</span>
+                </div>
+            `
+        })
+
+        // filter players by countries
+        document.querySelectorAll('.filter-country').forEach(country => {
+            country.addEventListener('click', () => {
+                
+                let child = country.querySelector('span');
+                
+                const filtredCountry = allPlayers.filter(p => p.nationality == child.innerText)
+                
+                localAllPlayers = filtredCountry
+                btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                showAllPlayers()
+            })
+        })
+
+
     }
     filterPlayers()
 
