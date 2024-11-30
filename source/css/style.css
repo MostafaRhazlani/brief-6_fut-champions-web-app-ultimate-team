@@ -97,7 +97,6 @@ h4 {
 
 .card-add-player img {
     position: absolute;
-    z-index: 1;
 }
 
 .card-add-player span {

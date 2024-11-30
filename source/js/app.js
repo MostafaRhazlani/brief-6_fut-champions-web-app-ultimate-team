@@ -186,7 +186,7 @@ fetch('/source/players.json')
             </div>`
 
             allPlayers.innerHTML += cardAllPlayer;
-            
+
         })
         
         document.querySelectorAll('.selected-player').forEach(player => {
@@ -226,7 +226,11 @@ fetch('/source/players.json')
                 modalPlayers.classList.remove('hidden')
             })
         })
+    }
 
+    function filterPlayers() {
+
+        // show or hide modals filter
         btnFilter.forEach(btn => {  
             btn.addEventListener('click', () => {
                 let btnId = btn.dataset.id
@@ -248,9 +252,35 @@ fetch('/source/players.json')
                 }
             })
         })
-    }
 
-    JSON.parse(localStorage.getItem('allPlayers')) || []
+        // display all position
+        const modalPosition = document.querySelector('.modal-position');
+
+        const positions = ['GK', 'CB', 'LB', 'RB', 'CM', 'LW', 'RW', 'ST']
+        modalPosition.innerHTML = ''
+        positions.map(filterPosition => {
+
+            modalPosition.innerHTML += `
+                <span class="group-filter filter-position">${filterPosition}</span>
+            `
+        })
+
+        // filter players when click on button position 
+        document.querySelectorAll('.filter-position').forEach(position => {
+            
+            position.addEventListener('click', () => {
+                const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+                const filtredPosition = allPlayers.filter(p => p.position == position.innerText)
+                
+                localAllPlayers = filtredPosition
+                btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                showAllPlayers()
+            })
+        })
+    }
+    filterPlayers()
+
     let index = localAllPlayers.length+1;
     submit.addEventListener('click', (e) => {
         e.preventDefault()
