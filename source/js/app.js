@@ -21,6 +21,9 @@ const closeForm = document.querySelector('.close-form');
 const submit = document.querySelector('.submit');
 const addNewPlayer = document.querySelector('.add-new-player');
 
+const btnFilter = document.querySelectorAll('.btn-filter');
+const modalFilter = document.querySelectorAll('.modal-filter');
+
 btn.addEventListener('click', () => {
     addNewPlayer.classList.add('show');
 })
@@ -183,7 +186,7 @@ fetch('/source/players.json')
             </div>`
 
             allPlayers.innerHTML += cardAllPlayer;
-
+            
         })
         
         document.querySelectorAll('.selected-player').forEach(player => {
@@ -221,6 +224,28 @@ fetch('/source/players.json')
                 toggleBtnRemove()
                 
                 modalPlayers.classList.remove('hidden')
+            })
+        })
+
+        btnFilter.forEach(btn => {  
+            btn.addEventListener('click', () => {
+                let btnId = btn.dataset.id
+                
+                if(btn.classList.contains('focus-btn')) {
+                    btn.classList.remove('focus-btn')
+                    modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                } else {
+                    btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                    btn.classList.add('focus-btn')
+
+                    modalFilter.forEach((modal, j) => {  
+                        if(btnId == j+1) {
+                            modal.classList.toggle('show-modal')
+                        } else {
+                            modal.classList.remove('show-modal')
+                        }
+                    })
+                }
             })
         })
     }

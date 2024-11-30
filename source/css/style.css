@@ -572,6 +572,11 @@ select:focus {
     border: solid 1px var(--aqua-color);
 }
 
+.filterSelect {
+    display: flex;
+    position: relative;
+}
+
 .filterSelect button {
     padding: 10px;
     background-color: black;
@@ -581,9 +586,40 @@ select:focus {
     margin-right: 7px;
 }
 
+button.focus-btn {
+    border: solid 1px var(--aqua-color);
+}
+
 .filterSelect button:hover {
     border: solid 1px var(--aqua-color);
     cursor: pointer;
+}
+
+
+.filterSelect .modal-filter {
+    display: none;
+    flex-direction: column;
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    position: absolute;
+    z-index: 10;
+    margin-top: 7px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.modal-filter.show-modal {
+    display: flex;
+}
+
+.filterSelect .group-filter {
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.filterSelect .group-filter:hover {
+    background-color: var(--secondary-color);
 }
 
 .scroll {
