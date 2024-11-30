@@ -77,6 +77,19 @@ h4 {
     position: relative;
 }
 
+.stadium-image .card-add-player {
+    height: 180px;
+    width: 159px;
+}
+
+.mb {
+    margin-bottom: 20px;
+}
+
+.mt {
+    margin-top: 30px;
+}
+
 .card-add-player:hover {
     filter: drop-shadow(1px 1px 8px var(--aqua-color));
     cursor: pointer;
@@ -88,7 +101,7 @@ h4 {
 }
 
 .card-add-player span {
-    font-size: 25px;
+    font-size: 20px;
     color: var(--aqua-color);
 }
 

@@ -237,7 +237,7 @@ fetch('/source/players.json')
             "position": selectPositionPlayer.value,
             "nationality": nationality.value,
             "flag": '',
-            "club": club,
+            "club": club.value,
             "logo": '',
             "rating": ratingPlayer.value,
             "pace": '88',
@@ -289,12 +289,12 @@ fetch('/source/players.json')
         
         
         // condition for change color border of rating
-        let changeColorBorderPAC = cPac <= 30 ? 'red' : cPac > 30 && cPac <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderSHo = cSho <= 30 ? 'red' : cSho > 30 && cSho <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderPAS = cPas <= 30 ? 'red' : cPas > 30 && cPas <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderDRI = cDri <= 30 ? 'red' : cDri > 30 && cDri <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderDEF = cDef <= 30 ? 'red' : cDef > 30 && cDef <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderPHY = cPhy <= 30 ? 'red' : cPhy > 30 && cPhy <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPAC = cPac > 0 && cPac <= 30 ? 'red' : cPac > 30 && cPac <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderSHo = cPac > 0 && cSho <= 30 ? 'red' : cSho > 30 && cSho <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPAS = cPac > 0 && cPas <= 30 ? 'red' : cPas > 30 && cPas <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderDRI = cPac > 0 && cDri <= 30 ? 'red' : cDri > 30 && cDri <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderDEF = cPac > 0 && cDef <= 30 ? 'red' : cDef > 30 && cDef <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPHY = cPac > 0 && cPhy <= 30 ? 'red' : cPhy > 30 && cPhy <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
         
 
         rating.innerHTML = `
