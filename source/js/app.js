@@ -851,7 +851,7 @@ fetch('/source/players.json')
         const substitutesCard = document.querySelector('.substitutes-card');
         contentSubstitutes.innerHTML = ''
 
-        if(localSubstitutes.length == 4) {
+        if(localSubstitutes.length == 12) {
             substitutesCard.style.display = 'none'
         } else {
             substitutesCard.style.display = 'flex'
