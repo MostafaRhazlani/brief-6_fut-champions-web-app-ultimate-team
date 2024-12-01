@@ -21,6 +21,9 @@ const closeForm = document.querySelector('.close-form');
 const submit = document.querySelector('.submit');
 const addNewPlayer = document.querySelector('.add-new-player');
 
+const btnFilter = document.querySelectorAll('.btn-filter');
+const modalFilter = document.querySelectorAll('.modal-filter');
+
 btn.addEventListener('click', () => {
     addNewPlayer.classList.add('show');
 })
@@ -225,7 +228,159 @@ fetch('/source/players.json')
         })
     }
 
-    JSON.parse(localStorage.getItem('allPlayers')) || []
+    function filterPlayers() {
+
+        // show or hide modals filter
+        btnFilter.forEach(btn => {  
+            btn.addEventListener('click', () => {
+                let btnId = btn.dataset.id
+                
+                if(btn.classList.contains('focus-btn')) {
+                    btn.classList.remove('focus-btn')
+                    modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                } else {
+                    btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                    btn.classList.add('focus-btn')
+
+                    modalFilter.forEach((modal, j) => {  
+                        if(btnId == j+1) {
+                            modal.classList.toggle('show-modal')
+                        } else {
+                            modal.classList.remove('show-modal')
+                        }
+                    })
+                }
+            })
+        })
+
+        const modalPosition = document.querySelector('.modal-position');
+        const modalCountry = document.querySelector('.modal-country');
+        const modalClub = document.querySelector('.modal-club');
+        const search = document.querySelector('.search');
+        const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+        
+        // display all position
+        const positions = ['GK', 'CB', 'LB', 'RB', 'CM', 'LW', 'RW', 'ST']
+        modalPosition.innerHTML = ''
+        positions.map(filterPosition => {
+
+            modalPosition.innerHTML += `
+                <span class="group-filter filter-position">${filterPosition}</span>
+            `
+        })
+        
+
+        // filter players when click on button position 
+        document.querySelectorAll('.filter-position').forEach(position => {
+            
+            position.addEventListener('click', () => {
+                const filtredPosition = allPlayers.filter(p => p.position == position.innerText)
+                
+                localAllPlayers = filtredPosition
+                btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                showAllPlayers()
+            })
+        })
+
+        const filtredCountry = []
+        const filtredFlag = []
+        // filter countries if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filtredCountry.includes(localAllPlayers[i].nationality)) {
+                filtredCountry.push(localAllPlayers[i].nationality)
+            }
+        }
+        // filter flags if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filtredFlag.includes(localAllPlayers[i].flag)) {
+                filtredFlag.push(localAllPlayers[i].flag)
+            }
+        }
+        
+        // display all countries
+        modalCountry.innerHTML = ''
+        filtredCountry.forEach((country, i) => {
+
+            modalCountry.innerHTML += `
+                <div class="group-filter filter-country">
+                    <img width="13" src="${filtredFlag[i]}" alt="">
+                    <span>${country}</span>
+                </div>
+            `
+        })
+
+        // filter players by countries
+        document.querySelectorAll('.filter-country').forEach(country => {
+            country.addEventListener('click', () => {
+                
+                let child = country.querySelector('span');
+                
+                const filtredCountry = allPlayers.filter(p => p.nationality == child.innerText)
+                
+                localAllPlayers = filtredCountry
+                btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                showAllPlayers()
+            })
+        })
+
+        const filtredClub = []
+        const filterLogoClub = []
+        // filter club if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filtredClub.includes(localAllPlayers[i].club)) {
+                filtredClub.push(localAllPlayers[i].club)
+            }
+        }
+
+        // filter logo club if douplicate
+        for (let i = 0; i < localAllPlayers.length; i++) {
+            if(!filterLogoClub.includes(localAllPlayers[i].logo)) {
+                filterLogoClub.push(localAllPlayers[i].logo)
+            }
+        }
+
+        // display all clubs
+        modalClub.innerHTML = ''
+        filtredClub.forEach((club, i) => {
+
+            modalClub.innerHTML += `
+                <div class="group-filter filter-club">
+                    <img width="13" src="${filterLogoClub[i]}" alt="">
+                    <span>${club}</span>
+                </div>
+            `
+        })
+
+        // filter players by club
+        document.querySelectorAll('.filter-club').forEach(club => {
+            club.addEventListener('click', () => {
+                
+                let child = club.querySelector('span');
+                
+                const filtredClub = allPlayers.filter(p => p.club == child.innerText)
+                
+                localAllPlayers = filtredClub
+                btnFilter.forEach(btn => btn.classList.remove('focus-btn'))
+                modalFilter.forEach(modal => modal.classList.remove('show-modal'));
+                showAllPlayers()
+            })
+        })
+
+        // filter players by name
+        search.addEventListener('input', () => {
+            let searchValue = search.value.toLowerCase()
+
+            let filtredName = allPlayers.filter(p => p.name.toLowerCase().includes(searchValue))
+            
+            localAllPlayers = filtredName;
+            showAllPlayers()
+        })
+        
+    }
+    filterPlayers()
+
     let index = localAllPlayers.length+1;
     submit.addEventListener('click', (e) => {
         e.preventDefault()
@@ -237,7 +392,7 @@ fetch('/source/players.json')
             "position": selectPositionPlayer.value,
             "nationality": nationality.value,
             "flag": '',
-            "club": club,
+            "club": club.value,
             "logo": '',
             "rating": ratingPlayer.value,
             "pace": '88',
@@ -289,12 +444,12 @@ fetch('/source/players.json')
         
         
         // condition for change color border of rating
-        let changeColorBorderPAC = cPac <= 30 ? 'red' : cPac > 30 && cPac <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderSHo = cSho <= 30 ? 'red' : cSho > 30 && cSho <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderPAS = cPas <= 30 ? 'red' : cPas > 30 && cPas <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderDRI = cDri <= 30 ? 'red' : cDri > 30 && cDri <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderDEF = cDef <= 30 ? 'red' : cDef > 30 && cDef <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
-        let changeColorBorderPHY = cPhy <= 30 ? 'red' : cPhy > 30 && cPhy <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPAC = cPac > 0 && cPac <= 30 ? 'red' : cPac > 30 && cPac <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderSHo = cPac > 0 && cSho <= 30 ? 'red' : cSho > 30 && cSho <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPAS = cPac > 0 && cPas <= 30 ? 'red' : cPas > 30 && cPas <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderDRI = cPac > 0 && cDri <= 30 ? 'red' : cDri > 30 && cDri <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderDEF = cPac > 0 && cDef <= 30 ? 'red' : cDef > 30 && cDef <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
+        let changeColorBorderPHY = cPac > 0 && cPhy <= 30 ? 'red' : cPhy > 30 && cPhy <= 70 ? 'yellow' : cPac > 70 ? 'green' : '';
         
 
         rating.innerHTML = `

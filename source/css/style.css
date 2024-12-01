@@ -77,6 +77,19 @@ h4 {
     position: relative;
 }
 
+.stadium-image .card-add-player {
+    height: 180px;
+    width: 159px;
+}
+
+.mb {
+    margin-bottom: 20px;
+}
+
+.mt {
+    margin-top: 30px;
+}
+
 .card-add-player:hover {
     filter: drop-shadow(1px 1px 8px var(--aqua-color));
     cursor: pointer;
@@ -84,11 +97,10 @@ h4 {
 
 .card-add-player img {
     position: absolute;
-    z-index: 1;
 }
 
 .card-add-player span {
-    font-size: 25px;
+    font-size: 20px;
     color: var(--aqua-color);
 }
 
@@ -498,6 +510,7 @@ select:focus {
 /* modal players */
 .modal-players {
     display: none;
+    flex-direction: column;
     position: fixed;
     top: 6%;
     z-index: 999;
@@ -531,14 +544,11 @@ select:focus {
     border: solid 1px var(--aqua-color);
 }
 
-.modal {
-    position: relative;
-}
-
-.modal .close {
-    position: absolute;
-    right: 2%;
-    top: 2%;
+.close {
+    padding: 10px;
+    display: flex;
+    justify-content: end;
+    width: 100%;
 }
 
 .close i, .close-substitutes i {
@@ -559,6 +569,11 @@ select:focus {
     border: solid 1px var(--aqua-color);
 }
 
+.filterSelect {
+    display: flex;
+    position: relative;
+}
+
 .filterSelect button {
     padding: 10px;
     background-color: black;
@@ -566,11 +581,44 @@ select:focus {
     border-radius: 5px;
     color: white;
     margin-right: 7px;
+    display: flex;
+    align-items: center;
+}
+
+button.focus-btn {
+    border: solid 1px var(--aqua-color);
 }
 
 .filterSelect button:hover {
     border: solid 1px var(--aqua-color);
     cursor: pointer;
+}
+
+
+.filterSelect .modal-filter {
+    display: none;
+    flex-direction: column;
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    position: absolute;
+    z-index: 10;
+    margin-top: 7px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.modal-filter.show-modal {
+    display: flex;
+}
+
+.filterSelect .group-filter {
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.filterSelect .group-filter:hover {
+    background-color: var(--secondary-color);
 }
 
 .scroll {
@@ -585,7 +633,6 @@ select:focus {
 .allPlayers {
     padding: 20px;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     height: 100%;
 }
