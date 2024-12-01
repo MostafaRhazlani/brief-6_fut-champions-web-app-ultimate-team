@@ -77,6 +77,28 @@ h4 {
     position: relative;
 }
 
+.modal-player {
+    display: none;
+    position: absolute;
+    top: 48px;
+    right: 0;
+    z-index: 10;
+    background-color: var(--primary-color);
+}
+
+.modal-player .icon-modal {
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.modal-player .icon-modal:hover {
+    background-color: var(--secondary-color);
+}
+
+.modal-player.show-modal-player {
+    display: block;
+}
+
 .stadium-image .card-add-player {
     height: 180px;
     width: 159px;

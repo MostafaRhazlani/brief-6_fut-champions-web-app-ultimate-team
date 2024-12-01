@@ -539,7 +539,7 @@ fetch('/source/players.json')
         
         localPrincipalPlayers.map(player => {
             principalPlayer =
-                `<div class="card-player show-modal-substitutes ${findPositionPlayer(player.position, player.id)}" data-id="${player.id}">
+                `<div class="card-player show-info-player ${findPositionPlayer(player.position, player.id)}" data-id="${player.id}">
                     <div class="head-card">
                         <div class="position">
                             <p>${player.rating}</p>
@@ -582,18 +582,58 @@ fetch('/source/players.json')
                                 <img width="14" src="${player.logo}" alt="">
                             </div>
                     </div>
-                    
+                    <div class="modal-player" data-id="${player.id}">
+                        <div class="remove icon-modal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <div class="changes icon-modal">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </div>
+                        <div class="info icon-modal">
+                            <i class="fa-solid fa-info-circle"></i>
+                        </div>
+                    </div>
                 </div>`
                 contentPlayers.innerHTML += principalPlayer;
         })
         
         showModalPlayers();
         
-        document.querySelectorAll('.show-modal-substitutes').forEach(show => {
+        const showInfoPlayer = document.querySelectorAll('.show-info-player');
+        const modalPlayer = document.querySelectorAll('.modal-player')
+        const changes = document.querySelectorAll('.changes')
+        const remove = document.querySelectorAll('.remove')
+
+        // show modal to remove or change player 
+        showInfoPlayer.forEach(show => {
             show.addEventListener('click', () => {
-                modalSubstitutes.classList.add('show-substitutes')
-                
-                showModalSubstitutesPlayer(show.dataset.id);
+
+                // show modal player
+                modalPlayer.forEach((modal, i) => {
+                    if(modal.dataset.id === show.dataset.id) {
+                        modal.classList.toggle('show-modal-player')
+                        
+                        // modal for change place player with player in substitutes
+                        changes[i].addEventListener('click', () => {
+    
+                            modalSubstitutes.classList.add('show-substitutes')
+                            showModalSubstitutesPlayer(show.dataset.id);
+                        })
+
+                        // remove player from stade
+                        remove[i].addEventListener('click', () => {
+                            const deletePlayer = localPrincipalPlayers.filter(p => p.id != show.dataset.id)
+                            
+                            localStorage.setItem('principalPlayers', JSON.stringify(deletePlayer))
+                            localPrincipalPlayers = deletePlayer
+                            showPrincipalPlayers();
+                        })
+                    } else {
+                        modal.classList.remove('show-modal-player')
+                    }
+                })
+
+
             })
         })
 
@@ -653,8 +693,8 @@ fetch('/source/players.json')
         })
         
         document.querySelectorAll('.change-place').forEach(change => {
+  
             change.addEventListener('click', () => {
-
                 
                 // find players
                 let substitutePlayerId = localSubstitutes.find(p => p.id == change.dataset.id);
@@ -715,7 +755,7 @@ fetch('/source/players.json')
 
         localSubstitutes.map(player => {
             substitutePlayer =
-                `<div class="card-player" data-id="${player.id}">
+                `<div class="card-player show-info-player-sub" data-id="${player.id}">
                     <div class="head-card">
                         <div class="position">
                             <p>${player.rating}</p>
@@ -757,11 +797,51 @@ fetch('/source/players.json')
                                 <img width="17" height="10" src="${player.flag}" alt="">
                                 <img width="14" src="${player.logo}" alt="">
                             </div>
+                        </div>
+                        <div class="modal-player" data-id="${player.id}">
+                            <div class="remove icon-modal">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <div class="info icon-modal">
+                                <i class="fa-solid fa-info-circle"></i>
+                            </div>
+                        </div>
                     </div>
                     
                 </div>`
-                contentSubstitutes.innerHTML += substitutePlayer;
+            contentSubstitutes.innerHTML += substitutePlayer;
         })
+
+        const showInfoPlayerSub = document.querySelectorAll('.show-info-player-sub');
+        const modalPlayer = document.querySelectorAll('.modal-player')
+        const remove = document.querySelectorAll('.remove')
+
+        // show modal to remove or change player 
+        showInfoPlayerSub.forEach(show => {
+            show.addEventListener('click', () => {
+
+                // show modal player
+                modalPlayer.forEach((modal, i) => {
+                    if(modal.dataset.id === show.dataset.id) {
+                        modal.classList.toggle('show-modal-player')
+
+                        // remove player from stade
+                        remove[i].addEventListener('click', () => {
+                            const deletePlayer = localSubstitutes.filter(p => p.id != show.dataset.id)
+                            
+                            localStorage.setItem('substitutes', JSON.stringify(deletePlayer))
+                            localSubstitutes = deletePlayer
+                            showSubstitutesPlayers();
+                        })
+                    } else {
+                        modal.classList.remove('show-modal-player')
+                    }
+                })
+
+
+            })
+        })
+
         showModalPlayers();
     }
     showModalPlayers();
