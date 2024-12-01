@@ -24,7 +24,7 @@ const addNewPlayer = document.querySelector('.add-new-player');
 const btnFilter = document.querySelectorAll('.btn-filter');
 const modalFilter = document.querySelectorAll('.modal-filter');
 
-const name = document.querySelector('.name');
+const namePlayer = document.querySelector('.name');
 const nationality = document.querySelector('.nationality');
 const club = document.querySelector('.club');
 const ratingPlayer = document.querySelector('.ratingPlayer');
@@ -41,7 +41,7 @@ closeForm.addEventListener('click', (e) => {
 })
 
 const resetData = () => {
-    name.value = '',
+    namePlayer.value = '',
     nationality.value = '',
     club.value = '',
     ratingPlayer.value = 0
@@ -251,8 +251,36 @@ fetch('/source/players.json')
                 modalPlayers.classList.remove('hidden')
             })
         })
-
         
+        const btnEditAdd = document.querySelectorAll('.btn');
+
+        btnEditAdd.forEach(btn => {
+            
+            btn.addEventListener('click', () => {
+                const editH1 = addNewPlayer.querySelector('h1')
+                if(btn.dataset.add == 1) {
+                    editH1.innerHTML = 'Add New Player'
+                    addNewPlayer.classList.add('show');
+                    resetData()
+                    
+                } else {
+                    editH1.innerHTML = 'Edit Player'
+                    addNewPlayer.classList.add('show');
+                    addOrEditPlayer(btn.dataset.id)
+
+                    localAllPlayers.forEach(player => {
+                        if(player.id == btn.dataset.id) {
+                            namePlayer.value = player.name,
+                            nationality.value = player.nationality,
+                            club.value = player.club,
+                            ratingPlayer.value = player.rating
+                            selectPositionPlayer.value = player.position
+                        }
+                    })
+
+                }
+            })
+        })
     }
 
     function generatePlayers() {
@@ -422,35 +450,58 @@ fetch('/source/players.json')
     }
     filterPlayers()
 
-    let index = localAllPlayers.length+1;
-    submit.addEventListener('click', (e) => {
-        e.preventDefault()
-
-        const objectPlayer = {
-            "id": index++,
-            "name": name.value,
-            "photo": 'https://cdn3.futbin.com/content/fifa25/img/players/p50531752.png?fm=png&ixlib=java-2.1.0&w=485&s=c618880412227731b9665c31e4531593',
-            "position": selectPositionPlayer.value,
-            "nationality": nationality.value,
-            "flag": '',
-            "club": club.value,
-            "logo": '',
-            "rating": ratingPlayer.value,
-            "pace": '88',
-            "shooting": '88',
-            "passing": '88',
-            "dribbling": '88',
-            "defending": '88',
-            "physical": '88'
-        }
+    function addOrEditPlayer(id) {
+        let index = localAllPlayers.length+1;
         
-        localAllPlayers.push(objectPlayer);
-        localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
-        showAllPlayers()
-        addNewPlayer.classList.remove('show');
+        submit.addEventListener('click', (e) => {
+            e.preventDefault()
+            
+            const childAddNewPlayer = addNewPlayer.querySelector('h1')
+            if(childAddNewPlayer.innerText == 'Edit Player') {
+                
 
-        resetData();
-    })
+                const getPlayer = localAllPlayers.find(p => p.id == id)
+                
+                if(getPlayer) {
+                    getPlayer.name = namePlayer.value;
+                    getPlayer.position = selectPositionPlayer.value;
+                    getPlayer.nationality = nationality.value;
+                    getPlayer.club = club.value;
+                    getPlayer.rating = ratingPlayer.value;
+                } 
+
+                localAllPlayers.push(getPlayer)
+                localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
+                
+                
+            } else {
+                const objectPlayer = {
+                    "id": index++,
+                    "name": namePlayer.value,
+                    "photo": 'https://cdn3.futbin.com/content/fifa25/img/players/p50531752.png?fm=png&ixlib=java-2.1.0&w=485&s=c618880412227731b9665c31e4531593',
+                    "position": selectPositionPlayer.value,
+                    "nationality": nationality.value,
+                    "flag": '',
+                    "club": club.value,
+                    "logo": '',
+                    "rating": ratingPlayer.value,
+                    "pace": '88',
+                    "shooting": '88',
+                    "passing": '88',
+                    "dribbling": '88',
+                    "defending": '88',
+                    "physical": '88'
+                }
+                
+                localAllPlayers.push(objectPlayer);
+                localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
+            }
+            showAllPlayers()
+            addNewPlayer.classList.remove('show');
+    
+            resetData();
+        })
+    }
 
     // function for calc rating and show result calc
     function calcRating() {
