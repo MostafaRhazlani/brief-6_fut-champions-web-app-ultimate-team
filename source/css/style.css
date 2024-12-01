@@ -28,6 +28,24 @@ h4 {
     font-size: 1.1rem
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background-color: var(--primary-color);
+}
+
+.toggle {
+    display: none;
+}
+
+.toggle span i {
+    color: var(--color-white);
+    font-size: 30px;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -99,7 +117,7 @@ h4 {
     display: block;
 }
 
-.stadium-image .card-add-player {
+.card-add-player {
     height: 180px;
     width: 159px;
 }
@@ -132,8 +150,8 @@ h4 {
     position: absolute;
     top: -4%;
     right: -13%;
-    height: 140px;
-    width: 160px;
+    height: 124px;
+    width: 210px;
 }
 
 .stadium-image .ST {
@@ -534,10 +552,10 @@ select:focus {
     display: none;
     flex-direction: column;
     position: fixed;
-    top: 6%;
+    top: 10%;
     z-index: 999;
     width: 80%;
-    height: 90%;
+    height: 88%;
     border-radius: 10px;
     background-color: var(--primary-color);
     overflow: hidden;
@@ -549,7 +567,6 @@ select:focus {
 
 .modal-players .filter {
     padding: 20px;
-    margin-top: 40px;
 }
 
 .filter .search {
@@ -696,6 +713,205 @@ button.focus-btn {
     flex-direction: column;
 }
 
-/* @media screen and (max-width: 700px) {
-   
-} */
+@media (max-width: 1160px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .toggle {
+        display: block;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 60px;
+        position: relative;
+    }
+
+    .section-info {
+        position: fixed;
+        z-index: 1001;
+        top: 9%;
+        right: 0;
+        transform: translate(110%);
+        transition: ease-in 0.5s;
+    }
+
+    .section-info.show-section {
+        transition: ease-in 0.5s;
+        transform: translate(0%);
+    }
+
+   .stadium-image > img {
+        width: 600px;
+   }
+
+    .stadium-image .card-player, .substitutes .card-player {
+        height: 186px;
+        width: 132px;
+    }
+
+    .content-players .rate-player,
+    .content-substitutes .rate-player {
+        display: none;
+    }
+
+    .content-players .position,
+    .content-substitutes .position {
+        left: 20px;
+        top: 36px;
+    }
+
+    .content-players .image-player img,
+    .content-substitutes .image-player img {
+        width: 120px;
+    }
+
+    .card-add-player {
+        height: 140px;
+        width: 120px;
+   }
+
+    .allPlayers {
+        justify-content: center;
+    }
+
+    .scroll {
+        height: 400px;
+        overflow: scroll;
+    }
+}
+
+@media (max-width: 760px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .toggle {
+        display: block;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 60px;
+        position: relative;
+    }
+
+    .section-info {
+        position: fixed;
+        z-index: 1001;
+        top: 9%;
+        right: 0;
+        transform: translate(110%);
+        transition: ease-in 0.5s;
+    }
+
+    .section-info.show-section {
+        transition: ease-in 0.5s;
+        transform: translate(0%);
+    }
+
+   .stadium-image > img {
+        width: 400px;
+   }
+
+    .stadium-image .card-player, .substitutes .card-player {
+        height: 145px;
+        width: 80px;
+    }
+
+    .content-players .rate-player,
+    .content-substitutes .rate-player{
+        display: none;
+    }
+
+    .content-players .position,
+    .content-substitutes .position {
+        left: 12px;
+        top: 38px;
+    }
+
+    .content-players .body-card h3,
+    .content-substitutes .body-card h3 {
+        font-size: 0.4rem;
+    }
+
+    .content-players .position p,
+    .content-substitutes .position p {
+        font-size: 0.8rem;
+        margin-bottom: -12px;
+    }
+
+    .content-players .position span,
+    .content-substitutes .position span {
+        font-size: 0.5rem;
+    }
+
+    .content-players .image-player img,
+    .content-substitutes .image-player img {
+        width: 70px;
+    }
+
+    .card-add-player img {
+        width: 24px;
+    }
+
+    .card-add-player span {
+        font-size: 0.7rem;
+    }
+
+    .principal-card {
+        top: -5%;
+        right: -4%;
+        width: 40px !important;
+    }
+
+    .body-card {
+        bottom: 35px;
+    }
+
+    .current-team {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .current-team img:first-child {
+        width: 10px;
+        height: 7px;
+    }
+
+    .current-team img:last-child {
+        width: 10px;
+    }
+
+    .card-add-player {
+        height: 90px;
+        width: 80px;
+    }
+
+    .substitutes {
+        padding: 0px 20px;
+    }
+
+    .filter .search {
+        width: 240px
+    }
+
+    .filterSelect {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .scroll {
+        height: 250px;
+        overflow: scroll;
+    }
+}
