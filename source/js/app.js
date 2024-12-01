@@ -253,11 +253,13 @@ fetch('/source/players.json')
             })
         })
 
-        // display all position
         const modalPosition = document.querySelector('.modal-position');
         const modalCountry = document.querySelector('.modal-country');
         const modalClub = document.querySelector('.modal-club');
-
+        const search = document.querySelector('.search');
+        const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+        
+        // display all position
         const positions = ['GK', 'CB', 'LB', 'RB', 'CM', 'LW', 'RW', 'ST']
         modalPosition.innerHTML = ''
         positions.map(filterPosition => {
@@ -266,9 +268,7 @@ fetch('/source/players.json')
                 <span class="group-filter filter-position">${filterPosition}</span>
             `
         })
-
         
-        const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
 
         // filter players when click on button position 
         document.querySelectorAll('.filter-position').forEach(position => {
@@ -367,6 +367,17 @@ fetch('/source/players.json')
                 showAllPlayers()
             })
         })
+
+        // filter players by name
+        search.addEventListener('input', () => {
+            let searchValue = search.value.toLowerCase()
+
+            let filtredName = allPlayers.filter(p => p.name.toLowerCase().includes(searchValue))
+            
+            localAllPlayers = filtredName;
+            showAllPlayers()
+        })
+        
     }
     filterPlayers()
 
