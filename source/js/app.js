@@ -24,15 +24,6 @@ const addNewPlayer = document.querySelector('.add-new-player');
 const btnFilter = document.querySelectorAll('.btn-filter');
 const modalFilter = document.querySelectorAll('.modal-filter');
 
-btn.addEventListener('click', () => {
-    addNewPlayer.classList.add('show');
-})
-
-closeForm.addEventListener('click', (e) => {
-    e.preventDefault();
-    addNewPlayer.classList.remove('show');
-})
-
 const name = document.querySelector('.name');
 const nationality = document.querySelector('.nationality');
 const club = document.querySelector('.club');
@@ -42,6 +33,15 @@ const selectPositionPlayer = document.querySelector('.select-position-player');
 let localPrincipalPlayers = JSON.parse(localStorage.getItem('principalPlayers')) || [];
 let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
 let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+
+btn.addEventListener('click', () => {
+    addNewPlayer.classList.add('show');
+})
+
+closeForm.addEventListener('click', (e) => {
+    e.preventDefault();
+    addNewPlayer.classList.remove('show');
+})
 
 const resetData = () => {
     name.value = '',
@@ -633,7 +633,10 @@ fetch('/source/players.json')
                     }
                 })
 
-
+                calcRating();
+                totalChemistry()
+                calcPriceTeam()
+                toggleBtnRemove()
             })
         })
 
@@ -838,7 +841,10 @@ fetch('/source/players.json')
                     }
                 })
 
-
+                calcRating();
+                totalChemistry()
+                calcPriceTeam()
+                toggleBtnRemove()
             })
         })
 
