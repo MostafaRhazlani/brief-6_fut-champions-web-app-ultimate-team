@@ -83,8 +83,6 @@ fetch('/source/players.json')
 .then(res => {
     players = res.players
 
-    // localStorage.setItem('allPlayers', JSON.stringify(players))
-    
     const findPositionPlayer = (positionPlayer, playerId) => {
 
         const findPosition = localPrincipalPlayers.filter(player => player.position === positionPlayer);
@@ -226,7 +224,23 @@ fetch('/source/players.json')
                 modalPlayers.classList.remove('hidden')
             })
         })
+
+        
     }
+
+    function generatePlayers() {
+        const generatePlayers = document.querySelector('.generate-players');
+
+        generatePlayers.addEventListener('click', () => {
+            localStorage.setItem('allPlayers', JSON.stringify(players))
+
+            let getDataPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+            
+            localAllPlayers = getDataPlayers
+            showAllPlayers()
+        })
+    }
+    generatePlayers()
 
     function filterPlayers() {
 
