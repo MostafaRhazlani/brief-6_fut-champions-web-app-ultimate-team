@@ -442,7 +442,7 @@ h4 {
     display: none;
     position: absolute;
     top: 15%;
-    z-index: 998;
+    z-index: 1000;
     background-color: var(--primary-color);
     padding: 20px;
     color: var(--color-white);

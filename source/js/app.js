@@ -16,7 +16,7 @@ const closeSubstitutes = document.querySelector('.close-substitutes');
 
 const allPlayers = document.querySelector('.allPlayers');
 
-const btn = document.querySelector('.btn');
+
 const closeForm = document.querySelector('.close-form');
 const submit = document.querySelector('.submit');
 const addNewPlayer = document.querySelector('.add-new-player');
@@ -24,7 +24,7 @@ const addNewPlayer = document.querySelector('.add-new-player');
 const btnFilter = document.querySelectorAll('.btn-filter');
 const modalFilter = document.querySelectorAll('.modal-filter');
 
-const name = document.querySelector('.name');
+const namePlayer = document.querySelector('.name');
 const nationality = document.querySelector('.nationality');
 const club = document.querySelector('.club');
 const ratingPlayer = document.querySelector('.ratingPlayer');
@@ -34,9 +34,6 @@ let localPrincipalPlayers = JSON.parse(localStorage.getItem('principalPlayers'))
 let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
 let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
 
-btn.addEventListener('click', () => {
-    addNewPlayer.classList.add('show');
-})
 
 closeForm.addEventListener('click', (e) => {
     e.preventDefault();
@@ -44,7 +41,7 @@ closeForm.addEventListener('click', (e) => {
 })
 
 const resetData = () => {
-    name.value = '',
+    namePlayer.value = '',
     nationality.value = '',
     club.value = '',
     ratingPlayer.value = 0
@@ -83,8 +80,6 @@ fetch('/source/players.json')
 .then(res => {
     players = res.players
 
-    // localStorage.setItem('allPlayers', JSON.stringify(players))
-    
     const findPositionPlayer = (positionPlayer, playerId) => {
 
         const findPosition = localPrincipalPlayers.filter(player => player.position === positionPlayer);
@@ -140,7 +135,7 @@ fetch('/source/players.json')
 
         localAllPlayers.map(player => {
             cardAllPlayer = 
-            `<div class="card-player selected-player select-substitute-player" data-id="${player.id}">
+            `<div class="card-player show-info-player-in-list" data-id="${player.id}">
                 <div class="head-card">
                     <div class="position">
                         <p>${player.rating}</p>
@@ -183,13 +178,43 @@ fetch('/source/players.json')
                         <img width="14" src="${player.logo}" alt="">
                     </div>
                 </div>
+                <div class="modal-player modal-player-in-list" data-id="${player.id}">
+                    <div class="drop-player icon-modal" data-id="${player.id}">
+                        <i class="fa-regular fa-circle-down"></i>
+                    </div>
+                    <div class="edit btn icon-modal" data-id="${player.id}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </div>
+                    <div class="info icon-modal">
+                        <i class="fa-solid fa-info-circle"></i>
+                    </div>
+                </div>
             </div>`
 
             allPlayers.innerHTML += cardAllPlayer;
 
         })
+
+        const showInfoPlayerInList = document.querySelectorAll('.show-info-player-in-list');
+        const modalPlayerInList = document.querySelectorAll('.modal-player-in-list')
+        const dropPlayer = document.querySelectorAll('.drop-player')
+
+        showInfoPlayerInList.forEach(show => {
+            show.addEventListener('click', () => {
+
+                // show modal player
+                modalPlayerInList.forEach(modal => {
+                    if(modal.dataset.id === show.dataset.id) {
+                        modal.classList.toggle('show-modal-player')
+                        
+                    } else {
+                        modal.classList.remove('show-modal-player')
+                    }
+                })
+            })
+        })
         
-        document.querySelectorAll('.selected-player').forEach(player => {
+        dropPlayer.forEach(player => {
             const cardId = player.dataset.id
 
             player.addEventListener('click', () => {
@@ -226,7 +251,51 @@ fetch('/source/players.json')
                 modalPlayers.classList.remove('hidden')
             })
         })
+        
+        const btnEditAdd = document.querySelectorAll('.btn');
+
+        btnEditAdd.forEach(btn => {
+            
+            btn.addEventListener('click', () => {
+                const editH1 = addNewPlayer.querySelector('h1')
+                if(btn.dataset.add == 1) {
+                    editH1.innerHTML = 'Add New Player'
+                    addNewPlayer.classList.add('show');
+                    resetData()
+                    
+                } else {
+                    editH1.innerHTML = 'Edit Player'
+                    addNewPlayer.classList.add('show');
+                    addOrEditPlayer(btn.dataset.id)
+
+                    localAllPlayers.forEach(player => {
+                        if(player.id == btn.dataset.id) {
+                            namePlayer.value = player.name,
+                            nationality.value = player.nationality,
+                            club.value = player.club,
+                            ratingPlayer.value = player.rating
+                            selectPositionPlayer.value = player.position
+                        }
+                    })
+
+                }
+            })
+        })
     }
+
+    function generatePlayers() {
+        const generatePlayers = document.querySelector('.generate-players');
+
+        generatePlayers.addEventListener('click', () => {
+            localStorage.setItem('allPlayers', JSON.stringify(players))
+
+            let getDataPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
+            
+            localAllPlayers = getDataPlayers
+            showAllPlayers()
+        })
+    }
+    generatePlayers()
 
     function filterPlayers() {
 
@@ -381,35 +450,58 @@ fetch('/source/players.json')
     }
     filterPlayers()
 
-    let index = localAllPlayers.length+1;
-    submit.addEventListener('click', (e) => {
-        e.preventDefault()
-
-        const objectPlayer = {
-            "id": index++,
-            "name": name.value,
-            "photo": 'https://cdn3.futbin.com/content/fifa25/img/players/p50531752.png?fm=png&ixlib=java-2.1.0&w=485&s=c618880412227731b9665c31e4531593',
-            "position": selectPositionPlayer.value,
-            "nationality": nationality.value,
-            "flag": '',
-            "club": club.value,
-            "logo": '',
-            "rating": ratingPlayer.value,
-            "pace": '88',
-            "shooting": '88',
-            "passing": '88',
-            "dribbling": '88',
-            "defending": '88',
-            "physical": '88'
-        }
+    function addOrEditPlayer(id) {
+        let index = localAllPlayers.length+1;
         
-        localAllPlayers.push(objectPlayer);
-        localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
-        showAllPlayers()
-        addNewPlayer.classList.remove('show');
+        submit.addEventListener('click', (e) => {
+            e.preventDefault()
+            
+            const childAddNewPlayer = addNewPlayer.querySelector('h1')
+            if(childAddNewPlayer.innerText == 'Edit Player') {
+                
 
-        resetData();
-    })
+                const getPlayer = localAllPlayers.find(p => p.id == id)
+                
+                if(getPlayer) {
+                    getPlayer.name = namePlayer.value;
+                    getPlayer.position = selectPositionPlayer.value;
+                    getPlayer.nationality = nationality.value;
+                    getPlayer.club = club.value;
+                    getPlayer.rating = ratingPlayer.value;
+                } 
+
+                localAllPlayers.push(getPlayer)
+                localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
+                
+                
+            } else {
+                const objectPlayer = {
+                    "id": index++,
+                    "name": namePlayer.value,
+                    "photo": 'https://cdn3.futbin.com/content/fifa25/img/players/p50531752.png?fm=png&ixlib=java-2.1.0&w=485&s=c618880412227731b9665c31e4531593',
+                    "position": selectPositionPlayer.value,
+                    "nationality": nationality.value,
+                    "flag": '',
+                    "club": club.value,
+                    "logo": '',
+                    "rating": ratingPlayer.value,
+                    "pace": '88',
+                    "shooting": '88',
+                    "passing": '88',
+                    "dribbling": '88',
+                    "defending": '88',
+                    "physical": '88'
+                }
+                
+                localAllPlayers.push(objectPlayer);
+                localStorage.setItem('allPlayers', JSON.stringify(localAllPlayers))
+            }
+            showAllPlayers()
+            addNewPlayer.classList.remove('show');
+    
+            resetData();
+        })
+    }
 
     // function for calc rating and show result calc
     function calcRating() {
@@ -582,7 +674,7 @@ fetch('/source/players.json')
                                 <img width="14" src="${player.logo}" alt="">
                             </div>
                     </div>
-                    <div class="modal-player" data-id="${player.id}">
+                    <div class="modal-player show-modal-principal" data-id="${player.id}">
                         <div class="remove icon-modal">
                             <i class="fa-solid fa-xmark"></i>
                         </div>
@@ -600,7 +692,7 @@ fetch('/source/players.json')
         showModalPlayers();
         
         const showInfoPlayer = document.querySelectorAll('.show-info-player');
-        const modalPlayer = document.querySelectorAll('.modal-player')
+        const modalPlayerPrincipal = document.querySelectorAll('.show-modal-principal')
         const changes = document.querySelectorAll('.changes')
         const remove = document.querySelectorAll('.remove')
 
@@ -609,7 +701,7 @@ fetch('/source/players.json')
             show.addEventListener('click', () => {
 
                 // show modal player
-                modalPlayer.forEach((modal, i) => {
+                modalPlayerPrincipal.forEach((modal, i) => {
                     if(modal.dataset.id === show.dataset.id) {
                         modal.classList.toggle('show-modal-player')
                         
@@ -801,7 +893,7 @@ fetch('/source/players.json')
                                 <img width="14" src="${player.logo}" alt="">
                             </div>
                         </div>
-                        <div class="modal-player" data-id="${player.id}">
+                        <div class="modal-player show-modal-substitutes" data-id="${player.id}">
                             <div class="remove icon-modal">
                                 <i class="fa-solid fa-xmark"></i>
                             </div>
@@ -816,7 +908,7 @@ fetch('/source/players.json')
         })
 
         const showInfoPlayerSub = document.querySelectorAll('.show-info-player-sub');
-        const modalPlayer = document.querySelectorAll('.modal-player')
+        const modalPlayerSubstitutes = document.querySelectorAll('.show-modal-substitutes')
         const remove = document.querySelectorAll('.remove')
 
         // show modal to remove or change player 
@@ -824,7 +916,7 @@ fetch('/source/players.json')
             show.addEventListener('click', () => {
 
                 // show modal player
-                modalPlayer.forEach((modal, i) => {
+                modalPlayerSubstitutes.forEach((modal, i) => {
                     if(modal.dataset.id === show.dataset.id) {
                         modal.classList.toggle('show-modal-player')
 
