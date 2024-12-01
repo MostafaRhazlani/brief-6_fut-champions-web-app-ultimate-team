@@ -30,10 +30,18 @@ const club = document.querySelector('.club');
 const ratingPlayer = document.querySelector('.ratingPlayer');
 const selectPositionPlayer = document.querySelector('.select-position-player');
 
+const toggle = document.querySelector('.toggle');
+const sectionInfo = document.querySelector('.section-info');
+
 let localPrincipalPlayers = JSON.parse(localStorage.getItem('principalPlayers')) || [];
 let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
 let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
 
+
+toggle.addEventListener('click', () => {
+    
+    sectionInfo.classList.toggle('show-section')
+})
 
 closeForm.addEventListener('click', (e) => {
     e.preventDefault();
@@ -261,6 +269,7 @@ fetch('/source/players.json')
                 if(btn.dataset.add == 1) {
                     editH1.innerHTML = 'Add New Player'
                     addNewPlayer.classList.add('show');
+                    sectionInfo.classList.remove('show-section')
                     resetData()
                     
                 } else {
@@ -277,7 +286,7 @@ fetch('/source/players.json')
                             selectPositionPlayer.value = player.position
                         }
                     })
-
+                    sectionInfo.classList.remove('show-section')
                 }
             })
         })
