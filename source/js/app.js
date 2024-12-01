@@ -16,7 +16,7 @@ const closeSubstitutes = document.querySelector('.close-substitutes');
 
 const allPlayers = document.querySelector('.allPlayers');
 
-const btn = document.querySelector('.btn');
+
 const closeForm = document.querySelector('.close-form');
 const submit = document.querySelector('.submit');
 const addNewPlayer = document.querySelector('.add-new-player');
@@ -34,9 +34,6 @@ let localPrincipalPlayers = JSON.parse(localStorage.getItem('principalPlayers'))
 let localSubstitutes = JSON.parse(localStorage.getItem('substitutes')) || [];
 let localAllPlayers = JSON.parse(localStorage.getItem('allPlayers')) || []
 
-btn.addEventListener('click', () => {
-    addNewPlayer.classList.add('show');
-})
 
 closeForm.addEventListener('click', (e) => {
     e.preventDefault();
@@ -138,7 +135,7 @@ fetch('/source/players.json')
 
         localAllPlayers.map(player => {
             cardAllPlayer = 
-            `<div class="card-player selected-player select-substitute-player" data-id="${player.id}">
+            `<div class="card-player show-info-player-in-list" data-id="${player.id}">
                 <div class="head-card">
                     <div class="position">
                         <p>${player.rating}</p>
@@ -181,13 +178,43 @@ fetch('/source/players.json')
                         <img width="14" src="${player.logo}" alt="">
                     </div>
                 </div>
+                <div class="modal-player modal-player-in-list" data-id="${player.id}">
+                    <div class="drop-player icon-modal" data-id="${player.id}">
+                        <i class="fa-regular fa-circle-down"></i>
+                    </div>
+                    <div class="edit btn icon-modal" data-id="${player.id}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </div>
+                    <div class="info icon-modal">
+                        <i class="fa-solid fa-info-circle"></i>
+                    </div>
+                </div>
             </div>`
 
             allPlayers.innerHTML += cardAllPlayer;
 
         })
+
+        const showInfoPlayerInList = document.querySelectorAll('.show-info-player-in-list');
+        const modalPlayerInList = document.querySelectorAll('.modal-player-in-list')
+        const dropPlayer = document.querySelectorAll('.drop-player')
+
+        showInfoPlayerInList.forEach(show => {
+            show.addEventListener('click', () => {
+
+                // show modal player
+                modalPlayerInList.forEach(modal => {
+                    if(modal.dataset.id === show.dataset.id) {
+                        modal.classList.toggle('show-modal-player')
+                        
+                    } else {
+                        modal.classList.remove('show-modal-player')
+                    }
+                })
+            })
+        })
         
-        document.querySelectorAll('.selected-player').forEach(player => {
+        dropPlayer.forEach(player => {
             const cardId = player.dataset.id
 
             player.addEventListener('click', () => {
@@ -596,7 +623,7 @@ fetch('/source/players.json')
                                 <img width="14" src="${player.logo}" alt="">
                             </div>
                     </div>
-                    <div class="modal-player" data-id="${player.id}">
+                    <div class="modal-player show-modal-principal" data-id="${player.id}">
                         <div class="remove icon-modal">
                             <i class="fa-solid fa-xmark"></i>
                         </div>
@@ -614,7 +641,7 @@ fetch('/source/players.json')
         showModalPlayers();
         
         const showInfoPlayer = document.querySelectorAll('.show-info-player');
-        const modalPlayer = document.querySelectorAll('.modal-player')
+        const modalPlayerPrincipal = document.querySelectorAll('.show-modal-principal')
         const changes = document.querySelectorAll('.changes')
         const remove = document.querySelectorAll('.remove')
 
@@ -623,7 +650,7 @@ fetch('/source/players.json')
             show.addEventListener('click', () => {
 
                 // show modal player
-                modalPlayer.forEach((modal, i) => {
+                modalPlayerPrincipal.forEach((modal, i) => {
                     if(modal.dataset.id === show.dataset.id) {
                         modal.classList.toggle('show-modal-player')
                         
@@ -815,7 +842,7 @@ fetch('/source/players.json')
                                 <img width="14" src="${player.logo}" alt="">
                             </div>
                         </div>
-                        <div class="modal-player" data-id="${player.id}">
+                        <div class="modal-player show-modal-substitutes" data-id="${player.id}">
                             <div class="remove icon-modal">
                                 <i class="fa-solid fa-xmark"></i>
                             </div>
@@ -830,7 +857,7 @@ fetch('/source/players.json')
         })
 
         const showInfoPlayerSub = document.querySelectorAll('.show-info-player-sub');
-        const modalPlayer = document.querySelectorAll('.modal-player')
+        const modalPlayerSubstitutes = document.querySelectorAll('.show-modal-substitutes')
         const remove = document.querySelectorAll('.remove')
 
         // show modal to remove or change player 
@@ -838,7 +865,7 @@ fetch('/source/players.json')
             show.addEventListener('click', () => {
 
                 // show modal player
-                modalPlayer.forEach((modal, i) => {
+                modalPlayerSubstitutes.forEach((modal, i) => {
                     if(modal.dataset.id === show.dataset.id) {
                         modal.classList.toggle('show-modal-player')
 
